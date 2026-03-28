@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MeringoDocs — Nigeria's Most Complete Academic Writing Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #0A0A0A; color: #F0EDE6; overflow-x: hidden; }
+
+:root {
+  --black: #0A0A0A;
+  --black2: #111111;
+  --black3: #1A1A1A;
+  --black4: #242424;
+  --gold: #C8983A;
+  --gold-light: #E8C06A;
+  --gold-dim: rgba(200,152,58,0.15);
+  --gold-border: rgba(200,152,58,0.25);
+  --white: #F0EDE6;
+  --muted: #888880;
+  --border: rgba(240,237,230,0.08);
+  --surface: #141414;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw; height: 68px;
+  background: rgba(10,10,10,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--gold); display: flex; align-items: center; justify-content: center;
+}
+.nav-logo-mark span { color: #0A0A0A; font-size: 18px; font-weight: 700; font-family: 'Cormorant Garamond', serif; }
+.nav-brand { display: flex; flex-direction: column; }
+.nav-name { font-size: 15px; font-weight: 500; color: var(--white); line-height: 1; }
+.nav-tag { font-size: 10px; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; margin-top: 3px; }
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--gold); color: #0A0A0A; border: none;
+  border-radius: 8px; padding: 10px 22px; font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--gold-light); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; padding: 140px 5vw 100px;
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(200,152,58,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(200,152,58,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--gold-border); border-radius: 100px;
+  padding: 6px 14px; margin-bottom: 1.75rem; background: var(--gold-dim);
+}
+.eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.hero-eyebrow span { font-size: 11px; font-weight: 500; color: var(--gold); letter-spacing: 0.07em; text-transform: uppercase; }
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  line-height: 1.1; color: var(--white); margin-bottom: 1.5rem; font-weight: 700;
+}
+.hero h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
+.hero-sub { font-size: 1rem; line-height: 1.8; color: var(--muted); max-width: 500px; margin-bottom: 2.5rem; font-weight: 300; }
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.btn-gold {
+  background: var(--gold); color: #0A0A0A; border: none;
+  padding: 15px 30px; border-radius: 10px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-ghost {
+  background: transparent; color: var(--white);
+  border: 1px solid var(--border); padding: 15px 30px;
+  border-radius: 10px; font-size: 14px; font-weight: 400;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+}
+.btn-ghost:hover { border-color: var(--gold-border); color: var(--gold); }
+
+.hero-stats { display: flex; gap: 2.5rem; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); font-weight: 600; line-height: 1; }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* HERO RIGHT CARD */
+.hero-mockup {
+  position: relative;
+}
+.mockup-card {
+  background: var(--black3); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,152,58,0.1);
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(-1deg); } }
+.mockup-bar {
+  background: var(--black4); padding: 12px 16px;
+  display: flex; align-items: center; gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.mdot { width: 10px; height: 10px; border-radius: 50%; }
+.mdot-r { background: #ff5f57; } .mdot-y { background: #febc2e; } .mdot-g { background: #28c840; }
+.mockup-tab {
+  margin-left: auto; background: var(--gold-dim); border: 1px solid var(--gold-border);
+  border-radius: 6px; padding: 3px 10px; font-size: 11px; color: var(--gold);
+}
+.mockup-body { padding: 20px; }
+.mockup-label { font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+.mockup-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--white); margin-bottom: 16px; line-height: 1.4; }
+.mockup-lines { display: flex; flex-direction: column; gap: 8px; }
+.mline {
+  height: 9px; border-radius: 3px; background: var(--black4);
+  position: relative; overflow: hidden;
+}
+.mline::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(200,152,58,0.2), transparent);
+  animation: shimmer 2s ease-in-out infinite;
+}
+@keyframes shimmer { to { left: 200%; } }
+.mline.w95{width:95%}.mline.w80{width:80%}.mline.w90{width:90%}.mline.w70{width:70%}.mline.w85{width:85%}.mline.w60{width:60%}
+.mockup-badges { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.mbadge {
+  font-size: 10px; padding: 4px 10px; border-radius: 5px;
+  border: 1px solid var(--gold-border); color: var(--gold); background: var(--gold-dim);
+}
+
+.float-badge {
+  position: absolute; bottom: -16px; right: -16px;
+  background: var(--gold); color: #0A0A0A;
+  border-radius: 12px; padding: 12px 16px; font-size: 12px; font-weight: 500;
+  box-shadow: 0 8px 24px rgba(200,152,58,0.4);
+}
+.float-badge strong { display: block; font-size: 18px; font-family: 'Cormorant Garamond', serif; }
+
+/* TICKER */
+.ticker-wrap {
+  background: var(--surface); padding: 16px 0; overflow: hidden;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.ticker { display: flex; gap: 3rem; animation: scroll 35s linear infinite; white-space: nowrap; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+.ticker-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.ticker-item strong { color: var(--white); }
+.tsep { color: var(--gold); }
+
+/* SECTIONS */
+section { padding: 100px 5vw; }
+.section-eyebrow { font-size: 11px; font-weight: 500; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); margin-bottom: 1rem; line-height: 1.15; font-weight: 700;
+}
+.section-title em { font-style: italic; color: var(--gold); font-weight: 500; }
+.section-sub { font-size: 0.95rem; color: var(--muted); max-width: 540px; line-height: 1.8; font-weight: 300; }
+
+/* FEATURES */
+.features-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 3.5rem; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.feature-cell {
+  background: var(--black2); padding: 2rem;
+  transition: background 0.2s;
+}
+.feature-cell:hover { background: var(--black3); }
+.feature-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: var(--gold-dim); border: 1px solid var(--gold-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 1.25rem;
+}
+.feature-cell h3 { font-size: 0.95rem; font-weight: 500; color: var(--white); margin-bottom: 0.6rem; }
+.feature-cell p { font-size: 13px; line-height: 1.75; color: var(--muted); font-weight: 300; }
+.feature-badge {
+  display: inline-block; margin-top: 0.75rem;
+  font-size: 10px; color: var(--gold); background: var(--gold-dim);
+  border: 1px solid var(--gold-border); border-radius: 4px; padding: 3px 8px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* HOW IT WORKS */
+.how-section { background: var(--black); }
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 3.5rem; position: relative; }
+.steps-grid::before {
+  content: ''; position: absolute; top: 28px; left: 10%; right: 10%;
+  height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold-border), transparent);
+}
+.step-item { text-align: center; padding: 0 1rem; }
+.step-num-wrap {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--black3); border: 1px solid var(--gold-border);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold); font-weight: 600;
+  position: relative; z-index: 1;
+}
+.step-item h3 { font-size: 0.9rem; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; }
+.step-item p { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+/* INSTITUTIONS */
+.inst-section { background: var(--surface); border-top: 1px solid var(--border); }
+.inst-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.5rem; }
+.inst-card {
+  background: var(--black2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; gap: 12px;
+  transition: border-color 0.2s;
+}
+.inst-card:hover { border-color: var(--gold-border); }
+.inst-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--gold-dim); border: 1px solid var(--gold-border);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.inst-card h4 { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+.inst-card p { font-size: 12px; color: var(--muted); }
+
+/* PRICING */
+.pricing-section { background: var(--black); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+.price-card {
+  background: var(--black3); border: 1px solid var(--border);
+  border-radius: 20px; padding: 2rem; position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.price-card:hover { border-color: var(--gold-border); transform: translateY(-4px); }
+.price-card.featured {
+  border-color: var(--gold); background: linear-gradient(160deg, rgba(200,152,58,0.08) 0%, var(--black3) 60%);
+}
+.price-popular {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: #0A0A0A;
+  font-size: 10px; font-weight: 500; padding: 4px 16px;
+  border-radius: 100px; white-space: nowrap; letter-spacing: 0.05em; text-transform: uppercase;
+}
+.price-name { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1.25rem; }
+.price-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--white); line-height: 1; font-weight: 600; }
+.price-num sup { font-size: 1.2rem; vertical-align: top; margin-top: 10px; display: inline-block; color: var(--gold); }
+.price-period { font-size: 12px; color: var(--muted); margin-top: 6px; margin-bottom: 1.75rem; }
+.price-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+.price-list li { font-size: 13px; color: var(--white); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; font-weight: 300; }
+.price-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+.price-list li.no::before { content: '✗'; color: #444; }
+.price-list li.no { color: #555; }
+.price-btn {
+  width: 100%; padding: 13px; border-radius: 10px; font-size: 13px;
+  font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  border: 1px solid var(--border); background: transparent; color: var(--white);
+  transition: all 0.2s;
+}
+.price-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+.price-btn.gold-btn { background: var(--gold); color: #0A0A0A; border-color: var(--gold); }
+.price-btn.gold-btn:hover { background: var(--gold-light); border-color: var(--gold-light); color: #0A0A0A; }
+
+/* TESTIMONIALS */
+.testimonials-section { background: var(--surface); border-top: 1px solid var(--border); }
+.test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+.test-card {
+  background: var(--black2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.75rem;
+  transition: border-color 0.2s;
+}
+.test-card:hover { border-color: var(--gold-border); }
+.test-stars { color: var(--gold); font-size: 13px; letter-spacing: 3px; margin-bottom: 1rem; }
+.test-card p { font-size: 13px; line-height: 1.8; color: var(--muted); margin-bottom: 1.5rem; font-style: italic; font-weight: 300; }
+.test-author { display: flex; align-items: center; gap: 10px; }
+.test-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--gold-dim); border: 1px solid var(--gold-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500; color: var(--gold);
+}
+.test-name { font-size: 13px; font-weight: 500; color: var(--white); }
+.test-school { font-size: 11px; color: var(--muted); }
+
+/* REFERRAL SECTION */
+.referral-section { background: var(--black); }
+.referral-box {
+  background: linear-gradient(135deg, var(--black3) 0%, rgba(200,152,58,0.05) 100%);
+  border: 1px solid var(--gold-border); border-radius: 24px;
+  padding: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+  margin-top: 3rem;
+}
+.referral-steps { display: flex; flex-direction: column; gap: 1.25rem; }
+.ref-step { display: flex; gap: 14px; align-items: flex-start; }
+.ref-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold); color: #0A0A0A;
+  font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ref-step h4 { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+.ref-step p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.ref-earn {
+  text-align: center; background: var(--black4);
+  border: 1px solid var(--gold-border); border-radius: 16px; padding: 2rem;
+}
+.ref-earn-num { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--gold); font-weight: 600; }
+.ref-earn-label { font-size: 13px; color: var(--muted); margin-top: 4px; margin-bottom: 1.5rem; }
+
+/* FAQ */
+.faq-section { background: var(--surface); border-top: 1px solid var(--border); }
+.faq-list { margin-top: 2.5rem; max-width: 700px; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+  padding: 1.25rem 0; display: flex; justify-content: space-between; align-items: center;
+  font-size: 14px; font-weight: 400; color: var(--white); font-family: 'DM Sans', sans-serif;
+}
+.faq-icon { color: var(--gold); font-size: 20px; transition: transform 0.2s; }
+.faq-q.open .faq-icon { transform: rotate(45deg); }
+.faq-a { font-size: 13px; line-height: 1.8; color: var(--muted); max-height: 0; overflow: hidden; transition: max-height 0.35s, padding 0.35s; font-weight: 300; }
+.faq-a.open { max-height: 300px; padding-bottom: 1.25rem; }
+
+/* CTA */
+.cta-section {
+  background: var(--gold);
+  padding: 80px 5vw; text-align: center;
+}
+.cta-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: #0A0A0A; margin-bottom: 1rem; font-weight: 700; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.2; }
+.cta-section p { font-size: 14px; color: rgba(10,10,10,0.6); margin-bottom: 2rem; }
+.btn-black {
+  background: #0A0A0A; color: var(--white); border: none;
+  padding: 16px 36px; border-radius: 10px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.btn-black:hover { background: #1A1A1A; transform: translateY(-2px); }
+
+/* FOOTER */
+footer { background: #060606; padding: 56px 5vw 28px; border-top: 1px solid var(--border); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 0.75rem; max-width: 240px; font-weight: 300; }
+.footer-whatsapp {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem;
+  background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.2);
+  border-radius: 8px; padding: 8px 14px; text-decoration: none;
+  font-size: 12px; color: #25D366; transition: background 0.2s;
+}
+.footer-whatsapp:hover { background: rgba(37,211,102,0.18); }
+.footer-col h4 { font-size: 11px; font-weight: 500; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+.footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 0.65rem; transition: color 0.2s; font-weight: 300; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: 12px; color: #444; }
+.footer-bottom a { color: var(--gold); text-decoration: none; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  backdrop-filter: blur(8px);
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--black3); border: 1px solid var(--gold-border);
+  border-radius: 20px; width: 90%; max-width: 440px; padding: 2rem;
+  transform: translateY(24px); transition: transform 0.3s; position: relative;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+  border-radius: 50%; border: 1px solid var(--border); background: var(--black4);
+  cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--muted);
+}
+.modal-close:hover { color: var(--white); }
+.modal h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; color: var(--white); margin-bottom: 0.25rem; font-weight: 700; }
+.modal-plan { font-size: 13px; color: var(--muted); margin-bottom: 0.5rem; }
+.modal-plan strong { color: var(--gold); }
+.modal-price { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 1.5rem; font-weight: 600; }
+.form-row { margin-bottom: 1rem; }
+.form-row label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.form-row input {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--border);
+  border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+  background: var(--black4); color: var(--white); outline: none; transition: border-color 0.2s;
+}
+.form-row input:focus { border-color: var(--gold-border); }
+.form-row input::placeholder { color: #555; }
+.pay-btn {
+  width: 100%; padding: 14px; background: var(--gold); color: #0A0A0A;
+  border: none; border-radius: 10px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 0.5rem; transition: all 0.2s;
+}
+.pay-btn:hover { background: var(--gold-light); }
+.pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.modal-secure { font-size: 11px; color: #555; text-align: center; margin-top: 0.75rem; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-mockup { display: none; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid::before { display: none; }
+  .inst-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
+  .referral-box { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .inst-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark"><span>M</span></div>
+    <div class="nav-brand">
+      <span class="nav-name">MeringoDocs</span>
+      <span class="nav-tag">Academic Writing Tool</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#referral">Earn money</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <button class="nav-cta" onclick="openModal('pro')">Get started</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span>For every Nigerian higher institution student</span>
+    </div>
+    <h1>Write academic documents that <em>impress</em> your lecturers.</h1>
+    <p class="hero-sub">
+      MeringoDocs turns your rough notes and ideas into properly formatted seminar papers, proposals, dissertation chapters, and PowerPoint presentations — in seconds. APA 7th edition. British English. Human-quality writing that passes AI detection.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-gold" onclick="openModal('pro')">Start writing — from ₦2,500/month</button>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Document types</div>
+      </div>
+      <div>
+        <div class="stat-num">APA 7</div>
+        <div class="stat-label">Edition standard</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Human-quality output</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-mockup">
+    <div class="mockup-card">
+      <div class="mockup-bar">
+        <div class="mdot mdot-r"></div>
+        <div class="mdot mdot-y"></div>
+        <div class="mdot mdot-g"></div>
+        <div class="mockup-tab">Generating document...</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-label">Seminar paper · Urban & Regional Planning · FUTA</div>
+        <div class="mockup-title">Urban Expansion and Housing Quality in Akure Metropolis, Ondo State, Nigeria</div>
+        <div class="mockup-lines">
+          <div class="mline w95"></div>
+          <div class="mline w80"></div>
+          <div class="mline w90"></div>
+          <div class="mline w70"></div>
+          <div class="mline w85"></div>
+          <div class="mline w95"></div>
+          <div class="mline w60"></div>
+          <div class="mline w80"></div>
+          <div class="mline w90"></div>
+          <div class="mline w75"></div>
+        </div>
+        <div class="mockup-badges">
+          <div class="mbadge">APA 7th</div>
+          <div class="mbadge">British English</div>
+          <div class="mbadge">1.5 spacing</div>
+          <div class="mbadge">Justified</div>
+        </div>
+      </div>
+    </div>
+    <div class="float-badge">
+      <strong>✓ Ready</strong>
+      Document complete
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Universities</strong> — UNILAG · UNIBEN · OAU · ABU · UNIPORT</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Polytechnics</strong> — Fed Poly Ado-Ekiti · Ibadan Poly · Kaduna Poly</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Colleges of Education</strong> — FCE Abeokuta · COE Zaria</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>FUTA</strong> — Urban & Regional Planning</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Schools of Nursing</strong> and Monotechnics</span>
+    <span class="ticker-item"><span class="tsep">✦</span> APA 7th Edition · British English · Human-quality</span>
+    <span class="ticker-item"><span class="tsep">✦</span> Download as <strong>Word (.docx)</strong> file</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Universities</strong> — UNILAG · UNIBEN · OAU · ABU · UNIPORT</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Polytechnics</strong> — Fed Poly Ado-Ekiti · Ibadan Poly · Kaduna Poly</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Colleges of Education</strong> — FCE Abeokuta · COE Zaria</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>FUTA</strong> — Urban & Regional Planning</span>
+    <span class="ticker-item"><span class="tsep">✦</span> <strong>Schools of Nursing</strong> and Monotechnics</span>
+    <span class="ticker-item"><span class="tsep">✦</span> APA 7th Edition · British English · Human-quality</span>
+    <span class="ticker-item"><span class="tsep">✦</span> Download as <strong>Word (.docx)</strong> file</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features" class="features-section">
+  <div class="section-eyebrow">What you get</div>
+  <h2 class="section-title">Every tool a Nigerian student needs — <em>in one place.</em></h2>
+  <p class="section-sub">Not a generic AI tool. MeringoDocs is built specifically for the formatting standards, writing expectations, and institutional requirements of Nigerian higher education.</p>
+
+  <div class="features-grid">
+    <div class="feature-cell">
+      <div class="feature-icon">📄</div>
+      <h3>Academic document generator</h3>
+      <p>Seminar papers, research proposals, dissertation chapters, journal articles, and abstracts — generated from just your topic and rough notes.</p>
+      <span class="feature-badge">Core feature</span>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">📥</div>
+      <h3>Download as Word (.docx)</h3>
+      <p>Every document downloads as a properly formatted Word file — Times New Roman, correct spacing, APA references with hanging indents, ready to submit.</p>
+      <span class="feature-badge">Pro & Annual</span>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">🛡️</div>
+      <h3>Plagiarism-safe guarantee</h3>
+      <p>All output is original, freshly written, and passes AI detection tools. No copied content. No generic AI phrasing. Sounds like a real researcher every time.</p>
+      <span class="feature-badge">All plans</span>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">🖥️</div>
+      <h3>PowerPoint presentation generator</h3>
+      <p>Turn your topic or document into a complete, well-designed slide deck — with speaker notes, proper headings, and content laid out for presentation.</p>
+      <span class="feature-badge">Pro & Annual</span>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">📚</div>
+      <h3>Document history dashboard</h3>
+      <p>Every document you generate is saved to your personal dashboard. Come back, edit, download, or continue working on any document at any time.</p>
+      <span class="feature-badge">Pro & Annual</span>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">💬</div>
+      <h3>WhatsApp ordering</h3>
+      <p>Do not even need to open the website. Send your topic and document type to our WhatsApp number and receive your formatted document directly in chat.</p>
+      <span class="feature-badge">Coming soon</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-section">
+  <div class="section-eyebrow">The process</div>
+  <h2 class="section-title">Four steps. <em>Submission-ready.</em></h2>
+  <p class="section-sub">No technical skills. No long waiting. Just your topic, your notes, and a properly formatted document in under a minute.</p>
+
+  <div class="steps-grid">
+    <div class="step-item">
+      <div class="step-num-wrap">1</div>
+      <h3>Choose document type</h3>
+      <p>Select seminar paper, proposal, dissertation chapter, PowerPoint, or more.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-num-wrap">2</div>
+      <h3>Enter your topic</h3>
+      <p>Type your research title and paste any rough notes or bullet points you have.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-num-wrap">3</div>
+      <h3>AI generates it</h3>
+      <p>MeringoDocs writes a complete, properly formatted document in seconds.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-num-wrap">4</div>
+      <h3>Download and submit</h3>
+      <p>Download your Word file and submit. APA 7th, British English, ready to go.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTITUTIONS -->
+<section class="inst-section">
+  <div class="section-eyebrow">Institutions supported</div>
+  <h2 class="section-title">Every Nigerian higher institution. <em>Covered.</em></h2>
+  <p class="section-sub">MeringoDocs works for students across all categories of Nigerian higher education — not just universities.</p>
+
+  <div class="inst-grid">
+    <div class="inst-card">
+      <div class="inst-icon">🎓</div>
+      <div>
+        <h4>Federal & State Universities</h4>
+        <p>UNILAG, UNIBEN, OAU, ABU, UNIPORT, FUTA, LASU and all others</p>
+      </div>
+    </div>
+    <div class="inst-card">
+      <div class="inst-icon">🏛️</div>
+      <div>
+        <h4>Polytechnics</h4>
+        <p>Fed Poly Ado-Ekiti, Ibadan Poly, Kaduna Poly, Yaba Tech and more</p>
+      </div>
+    </div>
+    <div class="inst-card">
+      <div class="inst-icon">📖</div>
+      <div>
+        <h4>Colleges of Education</h4>
+        <p>FCE Abeokuta, COE Zaria, Adeyemi COE, and all federal and state COEs</p>
+      </div>
+    </div>
+    <div class="inst-card">
+      <div class="inst-icon">🔬</div>
+      <div>
+        <h4>Monotechnics</h4>
+        <p>Specialised technical institutions and vocational higher institutions nationwide</p>
+      </div>
+    </div>
+    <div class="inst-card">
+      <div class="inst-icon">🏥</div>
+      <div>
+        <h4>Schools of Nursing</h4>
+        <p>All accredited schools of nursing and midwifery across Nigeria</p>
+      </div>
+    </div>
+    <div class="inst-card">
+      <div class="inst-icon">🌍</div>
+      <div>
+        <h4>Private Universities</h4>
+        <p>Covenant, Babcock, Landmark, Pan-Atlantic, Bowen and all accredited private universities</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing-section">
+  <div class="section-eyebrow">Pricing</div>
+  <h2 class="section-title">Simple, honest <em>pricing.</em></h2>
+  <p class="section-sub">No hidden charges. No confusing tiers. Pay once and write as many documents as you need all month long.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Free</div>
+      <div class="price-num">₦0</div>
+      <div class="price-period">No credit card needed</div>
+      <ul class="price-list">
+        <li>3 document generations</li>
+        <li>Seminar paper only</li>
+        <li>APA 7th edition</li>
+        <li class="no">Word (.docx) download</li>
+        <li class="no">PowerPoint generator</li>
+        <li class="no">Document history</li>
+        <li class="no">All document types</li>
+      </ul>
+      <button class="price-btn" onclick="window.location.href='#'">Try free — no sign up</button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-popular">Most popular</div>
+      <div class="price-name">Pro</div>
+      <div class="price-num"><sup>₦</sup>2,500</div>
+      <div class="price-period">per month · cancel anytime</div>
+      <ul class="price-list">
+        <li>Unlimited documents</li>
+        <li>All document types</li>
+        <li>Word (.docx) download</li>
+        <li>PowerPoint generator</li>
+        <li>Document history dashboard</li>
+        <li>APA 7th edition throughout</li>
+        <li>Plagiarism-safe guarantee</li>
+      </ul>
+      <button class="price-btn gold-btn" onclick="openModal('pro')">Get Pro — ₦2,500/month</button>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">Annual</div>
+      <div class="price-num"><sup>₦</sup>20,000</div>
+      <div class="price-period">per year · save ₦10,000</div>
+      <ul class="price-list">
+        <li>Everything in Pro</li>
+        <li>Priority generation speed</li>
+        <li>WhatsApp ordering access</li>
+        <li>Early access to new features</li>
+        <li>Dedicated email support</li>
+        <li>Referral earnings boosted 20%</li>
+      </ul>
+      <button class="price-btn" onclick="openModal('annual')">Get Annual — ₦20,000/year</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-eyebrow">Student reviews</div>
+  <h2 class="section-title">What Nigerian students <em>are saying.</em></h2>
+
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"I had my seminar paper topic and some rough notes. Within two minutes I had a full, properly formatted paper with APA references. My supervisor said it was one of the best in my class."</p>
+      <div class="test-author">
+        <div class="test-avatar">AO</div>
+        <div>
+          <div class="test-name">Adeyemi Oluwaseun</div>
+          <div class="test-school">Urban & Regional Planning, FUTA</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"The reference generator alone is worth every kobo. I used to spend hours getting APA format right. Now I paste my sources and get back a clean, properly formatted list — hanging indents and everything."</p>
+      <div class="test-author">
+        <div class="test-avatar">CI</div>
+        <div>
+          <div class="test-name">Chiamaka Ihejirika</div>
+          <div class="test-school">Architecture, Federal Poly Ado-Ekiti</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"I gave it my rough chapter with terrible formatting and received something that actually sounded like a real researcher wrote it. My project supervisor was genuinely impressed."</p>
+      <div class="test-author">
+        <div class="test-avatar">EM</div>
+        <div>
+          <div class="test-name">Emmanuel Makinde</div>
+          <div class="test-school">Geography, UNILAG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERRAL -->
+<section id="referral" class="referral-section">
+  <div class="section-eyebrow">Referral programme</div>
+  <h2 class="section-title">Share MeringoDocs. <em>Earn money.</em></h2>
+  <p class="section-sub">Every student you refer who subscribes puts money directly in your pocket. No cap. No limit. The more you share, the more you earn.</p>
+
+  <div class="referral-box">
+    <div class="referral-steps">
+      <div class="ref-step">
+        <div class="ref-num">1</div>
+        <div>
+          <h4>Get your unique referral link</h4>
+          <p>After signing up, your dashboard gives you a personal referral link to share with friends and classmates.</p>
+        </div>
+      </div>
+      <div class="ref-step">
+        <div class="ref-num">2</div>
+        <div>
+          <h4>Share on WhatsApp, Twitter, anywhere</h4>
+          <p>Send your link to coursemates, share in departmental groups, post on social media — wherever students are.</p>
+        </div>
+      </div>
+      <div class="ref-step">
+        <div class="ref-num">3</div>
+        <div>
+          <h4>Earn ₦500 per subscriber</h4>
+          <p>Every time someone subscribes through your link, ₦500 is credited to your account. Withdraw anytime via bank transfer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ref-earn">
+      <div class="ref-earn-num">₦500</div>
+      <div class="ref-earn-label">earned per successful referral</div>
+      <button class="btn-gold" style="width:100%;" onclick="openModal('pro')">Sign up and start earning</button>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="section-eyebrow">FAQ</div>
+  <h2 class="section-title">Common <em>questions.</em></h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Will this pass AI detection tools? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. MeringoDocs is specifically designed to write in a natural human academic voice, avoiding every phrasing pattern that AI detectors flag. The output reads like an experienced Nigerian researcher wrote it — not a machine. It passes Turnitin, GPTZero, and similar tools.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Which institutions does it support? <span class="faq-icon">+</span></button>
+      <div class="faq-a">All Nigerian higher institutions — federal and state universities, polytechnics, colleges of education, monotechnics, schools of nursing, and private universities. The formatting, tone, and referencing standards match what Nigerian lecturers and supervisors expect.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I download my document as a Word file? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. Pro and Annual subscribers can download every document as a properly formatted .docx Word file — Times New Roman 12pt, correct line spacing, APA 7th edition references with hanging indents, justified text. Ready to submit immediately.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How does payment work? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Payment is processed through Paystack, which accepts all Nigerian debit cards, bank transfers, and USSD payments. Your subscription activates the moment payment is confirmed. You can cancel at any time from your dashboard.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What document types can it generate? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Seminar papers, research proposals, dissertation chapters, journal articles, abstracts, and PowerPoint presentations. The reformat tool also fixes existing drafts, and the reference generator converts messy source lists into clean APA 7th edition reference lists.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How does the referral programme work? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Every Pro or Annual plan subscriber gets a unique referral link from their dashboard. When someone subscribes through your link, ₦500 is credited to your MeringoDocs wallet. You can withdraw to any Nigerian bank account once you reach ₦2,000.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Stop spending hours on formatting. Start submitting work you are proud of.</h2>
+  <p>Join Nigerian students already using MeringoDocs to write better, faster.</p>
+  <button class="btn-black" onclick="openModal('pro')">Get started — ₦2,500/month</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:0.75rem;">
+        <div class="nav-logo-mark"><span>M</span></div>
+        <div class="nav-brand">
+          <span class="nav-name">MeringoDocs</span>
+          <span class="nav-tag">Academic Writing Tool</span>
+        </div>
+      </div>
+      <p>APA 7th edition academic documents for every Nigerian higher institution student. Human-quality. AI-powered.</p>
+      <a href="https://wa.me/2348134667120" class="footer-whatsapp">
+        💬 WhatsApp: +234 813 466 7120
+      </a>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#referral">Earn money</a>
+    </div>
+    <div class="footer-col">
+      <h4>Institutions</h4>
+      <a href="#">Universities</a>
+      <a href="#">Polytechnics</a>
+      <a href="#">Colleges of Education</a>
+      <a href="#">Schools of Nursing</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:ayusmeringo@gmail.com">ayusmeringo@gmail.com</a>
+      <a href="https://wa.me/2348134667120">WhatsApp support</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 MeringoDocs. All rights reserved.</p>
+    <p>Secured by <a href="#">Paystack</a> · Built for Nigerian students</p>
+  </div>
+</footer>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Complete your order</h2>
+    <p class="modal-plan" id="modalPlanLabel">Pro plan — <strong>₦2,500/month</strong></p>
+    <div class="modal-price" id="modalPrice">₦2,500</div>
+
+    <div class="form-row">
+      <label>Full name</label>
+      <input type="text" id="payName" placeholder="e.g. Adeyemi Oladele" />
+    </div>
+    <div class="form-row">
+      <label>Email address</label>
+      <input type="email" id="payEmail" placeholder="your@email.com" />
+    </div>
+
+    <button class="pay-btn" id="payBtn" onclick="processPayment()">Pay now with Paystack</button>
+    <p class="modal-secure">🔒 Secured by Paystack · Cards · Bank transfer · USSD</p>
+  </div>
+</div>
+
+<script>
+let activePlan = 'pro';
+const plans = {
+  pro: { label: 'Pro plan', amount: 250000, display: '₦2,500', period: '/month' },
+  annual: { label: 'Annual plan', amount: 2000000, display: '₦20,000', period: '/year' }
+};
+
+function openModal(plan) {
+  activePlan = plan;
+  const p = plans[plan];
+  document.getElementById('modalPlanLabel').innerHTML = p.label + ' &mdash; <strong>' + p.display + p.period + '</strong>';
+  document.getElementById('modalPrice').textContent = p.display;
+  document.getElementById('payModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('payModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('payModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function processPayment() {
+  const name = document.getElementById('payName').value.trim();
+  const email = document.getElementById('payEmail').value.trim();
+  if (!name) { alert('Please enter your full name.'); return; }
+  if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+
+  const plan = plans[activePlan];
+  const btn = document.getElementById('payBtn');
+  btn.textContent = 'Opening Paystack...';
+  btn.disabled = true;
+
+  const handler = PaystackPop.setup({
+    key: 'pk_live_4b52ba8f4673fb16e134f391489db5659b6ad8f5',
+    email: email,
+    amount: plan.amount,
+    currency: 'NGN',
+    ref: 'MD_' + Date.now(),
+    metadata: { name: name, plan: activePlan },
+    callback: function(response) {
+      closeModal();
+      alert('Payment successful!\n\nReference: ' + response.reference + '\n\nYour MeringoDocs account is now active. Check your email for access details.');
+      btn.textContent = 'Pay now with Paystack';
+      btn.disabled = false;
+    },
+    onClose: function() {
+      btn.textContent = 'Pay now with Paystack';
+      btn.disabled = false;
+    }
+  });
+  handler.openIframe();
+}
+
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+</script>
+</body>
+</html>
